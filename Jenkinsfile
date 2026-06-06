@@ -8,12 +8,11 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                // Assure-toi que dans Jenkins > Outils, 
-                // ton scanner s'appelle bien "SonarScanner"
                 script {
                     def scannerHome = tool 'SonarScanner'
                     withSonarQubeEnv('MonServeurSonar') {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                        // On force l'URL ici pour éviter l'erreur localhost
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.host.url=http://host.docker.internal:9000"
                     }
                 }
             }
