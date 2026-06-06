@@ -15,8 +15,8 @@ pipeline {
             steps {
                 echo 'Début de l\'analyse SonarQube...'
                 withSonarQubeEnv('MonServeurSonar') {
-                    // host.docker.internal pointe vers ton PC hôte depuis le conteneur Jenkins
-                    sh '${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=juice-shop -Dsonar.sources=. -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.login=sq_ad43b092f774f86d2f0d0a45010c56abfd94f618'
+                    // Utilisation de sonar.token au lieu de sonar.login pour éviter l'erreur 401
+                    sh '${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=juice-shop -Dsonar.sources=. -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.token=sq_ad43b092f774f86d2f0d0a45010c56abfd94f618'
                 }
             }
         }
